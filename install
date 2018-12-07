@@ -2,9 +2,12 @@
 
 . driglibash-base
 
-run cp scrutation /bin/
+root_or_die
 
-run cp scrutation.service /etc/systemd/system/
+
+run cp $(where)/scrutation /bin/
+
+cat $(where)/scrutation.service | sed "s#echo#$@" > /etc/systemd/system/scrutation.service
 
 run systemctl enable scrutation
 
