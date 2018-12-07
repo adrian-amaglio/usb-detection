@@ -1,0 +1,26 @@
+#!/bin/bash
+
+. driglibash-base
+
+if [ "$#" -eq 0 ] ; then
+  yell "Need arguments"
+  yell "Usage : $0 command"
+fi
+
+root_or_die
+
+# Assuming there is no wierd mounting like disk encryption or wierd naming for this script
+# Ctrl+V Ctrl+@ pour écrire le charactère '\0'
+disks=" $(sudo fdisk -l 2> /dev/null| grep '/dev/[a-z0-9]* ' -o | tr '\n' ' ') "
+
+while true ; do
+  old_disks="$disks"
+  sleep 1
+  disks=" $(sudo fdisk -l 2> /dev/null| grep '/dev/[a-z0-9]* ' -o | tr '\n' ' ') "
+  for disk in $disks ; do
+    if [[ "$old_disks" = *"$disk"* ]] ; then
+      continue
+    fi
+    $@ "$disk"
+  done
+done
