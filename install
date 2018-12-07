@@ -1,0 +1,11 @@
+#!/bin/bash
+
+. driglibash-base
+
+run cp scrutation /bin/
+
+run cp scrutation.service /etc/systemd/system/
+
+run systemctl enable scrutation
+
+run systemctl start scrutation

@@ -5,7 +5,7 @@ After=multi-user.target
 [Service]
 User=root
 Type=idle
-ExecStart=/sbin/scrutation echo
+ExecStart=/bin/scrutation echo
 RemainAfterExit=yes
 
 [Install]
